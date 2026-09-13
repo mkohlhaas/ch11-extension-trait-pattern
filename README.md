@@ -11,14 +11,15 @@ these traits are commonly suffixed with Ext (e.g., `StringExt` or `IteratorExt`)
 
 ### Why Use Extension Traits?
 
-* Bypass the Orphan Rule: Adds methods to types from the standard library (String, Vec, Result) or third-party crates.
-* Enable Method Chaining: Allows you to use clean dot.notation() instead of wrapping variables in nested, clunky function calls.
-* Platform-Specific Isolation: Separates cross-platform APIs from specialized behavior (e.g., the standard library uses std::os::unix::fs::FileExt to add Unix-specific file operations).
+* **Bypass the Orphan Rule**: Adds methods to types from the standard library (String, Vec, Result) or third-party crates.
+* **Enable Method Chaining**: Allows you to use clean dot.notation() instead of wrapping variables in nested, clunky function calls.
+* **Platform-Specific Isolation**: Separates cross-platform APIs from specialized behavior (e.g., the standard library uses std::os::unix::fs::FileExt to add Unix-specific file operations).
 
 
 ### Step-by-Step Example
 
-If you want to add a custom is_valid_email check directly onto Rust's standard String type, you can implement an extension trait:
+If you want to add a custom is_valid_email check directly onto Rust's standard
+String type, you can implement an extension trait:
 
 ```rust
 // 1. Define your custom extension trait
@@ -49,7 +50,8 @@ fn main() {
 
 ### Extending Other Traits (Blanket Implementations)
 
-You can also use this pattern to add methods to entire families of types by targeting an existing trait (like Iterator) using a blanket implementation.
+You can also use this pattern to add methods to entire families of types by
+targeting an existing trait (like Iterator) using a blanket implementation.
 
 ```rust
 // Create an extension trait for Iterators
@@ -66,14 +68,14 @@ pub trait IteratorExt: Iterator + Sized {
 
 ### Key Rules to Remember
 
-* Trait Scope: To use the extension method in another module or file, you must
+* **Trait Scope**: To use the extension method in another module or file, you must
 explicitly import the trait via use crate::MyExt;, even if you already have
 access to the underlying type.
-* Naming Collisions: If two extension traits define a method with the exact
+* **Naming Collisions**: If two extension traits define a method with the exact
 same name for the same type, Rust will throw a compiler error unless you invoke
 the method using Universal Function Call Syntax (UFCS), such as
 MyExt::my_method(&variable).
-* Macro Crates: If you write many extension traits and want to reduce
+* **Macro Crates**: If you write many extension traits and want to reduce
 boilerplate, community tools like the [extend crate](https://docs.rs/extend) or
 [extension-trait crate](https://crates.io/crates/extension-trait) provide
 macros to automatically generate them from standard impl blocks.
